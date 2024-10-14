@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your enhanced site description">
+    <title>Palmetto Paradigm</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@400&display=swap'); /* Add SUSE font */
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Default font for paragraphs */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'SUSE', sans-serif; /* Use Poppins for headings */
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+        }
+
+        .slide-in {
+            transform: translateY(50px);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        .slide-in.appear {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        /* Parallax background */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 600px; /* Adjust height as needed */
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Example sections to add padding around parallax */
+        .content-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        } 
+
+        #background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -1; /* Ensure video stays in the background */
+}       
+    </style>
+</head>
+<body class="bg-gray-900 text-white" x-data="{ mobileMenuOpen: false, darkMode: true }">
+
+<!-- GDPR Banner -->
+<div x-data="{ showBanner: true }" x-show="showBanner" class="bg-white p-4 fixed bottom-0 left-0 w-full z-50">
+  <div class="container mx-auto flex justify-between items-center">
+    <span class="text-gray-800">Palmetto Paradigm uses cookies to provide a personalized experience, improve our content, and monitor site performance. By clicking "Accept," you consent to our use of cookies in accordance with our <a href="#" class="underline">Privacy Policy</a>. To learn more and control what cookies are used, go to <a href="#" class="underline">Manage Cookies</a>.</span>
+    <button @click="showBanner = false" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-300">Accept</button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bg-gray-900 shadow-lg fixed w-full top-0 z-40 transition-all duration-300">
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="text-2xl font-bold">Palmetto Paradigm</div>
+    <nav class="hidden md:block">
+      <ul class="flex space-x-4">
+        <li><a href="#hero" class="hover:text-gray-400 transition duration-300">Home</a></li>
+        <li><a href="#info" class="hover:text-gray-400 transition duration-300">Info</a></li>
+        <li><a href="#statistics" class="hover:text-gray-400 transition duration-300">Statistics</a></li>
+        <li><a href="#contact" class="hover:text-gray-400 transition duration-300">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hidden md:flex space-x-4 items-center">
+      <button class="hover:text-gray-400 transition duration-300">Login</button>
+      <button class="hover:text-gray-400 transition duration-300">Sign Up</button>
+      <button class="hover:text-gray-400 transition duration-300">
+        <i class="fas fa-bell"></i>
+      </button>
+      <div class="relative">
+        <input type="text" placeholder="Search..." class="bg-gray-800 p-2 rounded pl-8">
+        <i class="fas fa-search absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+      </div>
+      <button @click="darkMode = !darkMode" class="text-yellow-400 hover:text-yellow-200 transition duration-300">
+        <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+      </button>
+    </div>
+    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-white focus:outline-none">
+      <i :class="mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+    </button>
+  </div>
+  <!-- Mobile Menu -->
+  <div x-show="mobileMenuOpen" class="md:hidden bg-gray-800">
+    <ul class="py-4">
+      <li><a href="#hero" class="block px-4 py-2 hover:bg-gray-700">Home</a></li>
+      <li><a href="#info" class="block px-4 py-2 hover:bg-gray-700">Info</a></li>
+      <li><a href="#statistics" class="block px-4 py-2 hover:bg-gray-700">Statistics</a></li>
+      <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-700">Contact</a></li>
+      <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Login</a></li>
+      <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sign Up</a></li>
+    </ul>
+  </div>
+</header>
+
+    <!-- Main/Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center relative overflow-hidden">
+        <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+            <source src="paradigm.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-pulse">Welcome to Palmetto Paradigm</h1>
+            <p class="mb-8 text-xl">Your trusted partner in residential cybersecurity, dedicated to protecting your home and personal information.</p>
+            <a href="#info" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded transition duration-300 transform hover:scale-105">Get Started</a>
+        </div>
+    </section>
+
+<!-- Parallax Section 1 -->
+<section class="parallax" style="background-image: url('px1.jpg');">
+    <div class="content-section">
+        <h2 class="text-3xl font-bold text-white">Innovative Residential Cybersecurity Solutions</h2>
+        <p class="text-xl text-gray-300 mt-4">Experience unparalleled protection for your home with cutting-edge technology.</p>
+    </div>
+</section>    
+
+    <!-- Info Section -->
+    <section id="info" class="py-16 container mx-auto text-center">
+        <h1 class="text-3xl font-bold mb-6 fade-in">Is your digital home safe?</h1>
+        <p class="mb-4 fade-in">At Palmetto Paradigm, we are committed to delivering innovative solutions that bridge technology and creativity, shaping a brighter future for South Carolina.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <i class="fas fa-rocket text-4xl mb-4 text-blue-500"></i>
+                <h3 class="text-xl font-semibold mb-2">What is residential cybersecurity?</h3>
+                <p>Residential cybersecurity protects your digital space, much like locking doors and windows. It involves securing your Wi-Fi network, safeguarding devices against malware, and recognizing online scams. This ensures your personal data, online activities, and smart devices remain safe from threats, allowing you to enjoy the internet while minimizing risks.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <i class="fas fa-cog text-4xl mb-4 text-green-500"></i>
+                <h3 class="text-xl font-semibold mb-2">Why is residential cybersecurity important?</h3>
+                <p>Residential cybersecurity is vital for protecting personal devices and sensitive information from hackers, viruses, and identity theft. It safeguards your online privacy and prevents financial losses while securing smart home devices. With strong cybersecurity measures, families can confidently navigate the internet, knowing their digital lives are protected.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <i class="fas fa-chart-line text-4xl mb-4 text-purple-500"></i>
+                <h3 class="text-xl font-semibold mb-2">Common Home Network Risks</h3>
+                <p>Common threats to home networks include unauthorized access from weak Wi-Fi passwords, malware that steals data or causes failures, and phishing scams that trick users into revealing information. Ransomware encrypts files for ransom, while IoT vulnerabilities in smart devices pose significant risks. Data breaches expose sensitive info, highlighting the need for robust security measures.</p>
+            </div>
+        </div>
+    </section>
+
+<!-- Parallax Section 2 -->
+<section class="parallax" style="background-image: url('px2.jpg');">
+    <div class="content-section">
+        <h2 class="text-3xl font-bold text-white">Protect Your Smart Home</h2>
+        <p class="text-xl text-gray-300 mt-4">Stay safe from cyber threats targeting connected devices in your household.</p>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section id="statistics" class="py-16 bg-gray-800">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 fade-in">Residential Cybersecurity Statistics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Projected Global Cybercrime Costs</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 10500 ? count + 100 : 10500, 20)">
+                    <span x-text="count.toLocaleString()"></span> Billion
+                </p>
+                <p class="text-gray-400">Projected to reach $10.5 trillion by 2025.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Phishing Victims</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 324000 ? count + 100 : 324000, 20)">
+                    <span x-text="(count / 1000).toLocaleString()"></span> Thousand
+                </p>
+                <p class="text-gray-400">323,972 internet users reported phishing attacks in 2021.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Cyberattacks on Smart Homes</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 12000 ? count + 100 : 12000, 20)">
+                    <span x-text="count.toLocaleString()"></span> Attacks
+                </p>
+                <p class="text-gray-400">A single smart home may face over 12,000 attacks per week.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Average Ransom Demand</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 1540 ? count + 10 : 1540, 20)">
+                    <span x-text="(count / 1000).toLocaleString()"></span> Thousand
+                </p>
+                <p class="text-gray-400">Average ransom in 2023 was $1.54 million.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Households with Vulnerable IoT Devices</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 70 ? count + 1 : 70, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">70% of homes have vulnerable IoT devices.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Human Error Contribution</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 95 ? count + 1 : 95, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">95% of breaches are attributed to human error.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Households Taking Precautions</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 77 ? count + 1 : 77, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">77% of Americans have taken steps to protect their data online.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Americans Believing Their Networks Are Secure</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 68 ? count + 1 : 68, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">68% believe their home networks are secure.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Identity Theft Reports in 2021</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 5700 ? count + 30 : 5700, 20)">
+                    <span x-text="(count / 1000000).toLocaleString()"></span> Million
+                </p>
+                <p class="text-gray-400">5.7 million reports in 2021.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Smart Home Device Users Experiencing Incidents</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 45 ? count + 1 : 45, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">45% of users experienced a cybersecurity incident.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Increase in Phishing Attacks (2019-2021)</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 220 ? count + 1 : 220, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">A 220% increase in phishing attacks.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Data Breaches in the U.S. (2021)</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 1862 ? count + 10 : 1862, 20)">
+                    <span x-text="count"></span>
+                </p>
+                <p class="text-gray-400">1,862 data breaches reported in 2021.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Increase in Cyberattacks During the Pandemic</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 400 ? count + 2 : 400, 20)">
+                    <span x-text="count"></span> %
+                </p>
+                <p class="text-gray-400">A 400% increase in cyberattacks reported.</p>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-lg slide-in">
+                <h3 class="text-xl font-semibold mb-2">Average Home Attacks per Day</h3>
+                <p class="text-4xl font-bold" x-data="{ count: 0 }" x-init="setInterval(() => count = count < 54 ? count + 1 : 54, 20)">
+                    <span x-text="count"></span>
+                </p>
+                <p class="text-gray-400">An average of 54 attacks per day on smart homes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Parallax Section 3 -->
+<section class="parallax">
+    <video autoplay muted loop playsinline id="background-video">
+        <source src="px3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="content-section">
+        <h2 class="text-3xl font-bold text-white">We Safeguard Your Digital Future</h2>
+        <p class="text-xl text-gray-300 mt-4">Join us in securing your family's digital well-being for years to come.</p>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 fade-in">Contact Us</h2>
+        <form x-data="{ name: '', email: '', message: '', submitted: false }" @submit.prevent="submitted = true" class="flex flex-col items-center">
+            <input type="text" x-model="name" placeholder="Your Name" class="bg-gray-800 p-2 mb-4 rounded w-full md:w-1/2" required>
+            <input type="email" x-model="email" placeholder="Your Email" class="bg-gray-800 p-2 mb-4 rounded w-full md:w-1/2" required>
+            <textarea x-model="message" placeholder="Your Message" class="bg-gray-800 p-2 mb-4 rounded w-full md:w-1/2 h-32" required></textarea>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded transition duration-300 transform hover:scale-105">Send Message</button>
+            <p x-show="submitted" class="mt-4 text-green-500">Thank you for your message. We'll get back to you soon!</p>
+        </form>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="py-16 bg-gray-900 text-center">
+        <h2 class="text-3xl font-bold mb-6 fade-in">What Our Clients Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <img src="sp1.png" alt="Client 1" class="rounded-full mx-auto mb-4 w-24 h-24">
+                <p class="italic">"Testimonial 1. This product changed my life!"</p>
+                <p class="font-bold mt-2">- Andy M.</p>
+                <div class="flex justify-center mt-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <img src="sp2.png" alt="Client 2" class="rounded-full mx-auto mb-4 w-24 h-24">
+                <p class="italic">"Testimonial 2. Incredible service and support!"</p>
+                <p class="font-bold mt-2">- Amanda W.</p>
+                <div class="flex justify-center mt-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg slide-in">
+                <img src="sp3.png" alt="Client 3" class="rounded-full mx-auto mb-4 w-24 h-24">
+                <p class="italic">"Testimonial 3. I can't imagine working without it now!"</p>
+                <p class="font-bold mt-2">- Christopher W.</p>
+                <div class="flex justify-center mt-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="far fa-star text-yellow-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-6">
+        <div class="container mx-auto text-center">
+            <nav class="mb-4">
+                <ul class="flex flex-wrap justify-center space-x-4">
+                    <li><a href="#hero" class="hover:text-gray-400 transition duration-300">Home</a></li>
+                    <li><a href="#info" class="hover:text-gray-400 transition duration-300">Info</a></li>
+                    <li><a href="#statistics" class="hover:text-gray-400 transition duration-300">Statistics</a></li>
+                    <li><a href="#contact" class="hover:text-gray-400 transition duration-300">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="social-icons mb-4">
+                <a href="#" class="text-gray-400 hover:text-gray-300 mx-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gray-300 mx-2"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gray-300 mx-2"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gray-300 mx-2"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="text-gray-400">&copy; 2024 Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for animations -->
+    <script>
+        // GSAP Animations
+        gsap.utils.toArray('.fade-in').forEach((element) => {
+            ScrollTrigger.create({
+                trigger: element,
+                start: 'top bottom',
+                toggleClass: { targets: element, className: 'appear' }
+            });
+        });
+
+        gsap.utils.toArray('.slide-in').forEach((element) => {
+            ScrollTrigger.create({
+                trigger: element,
+                start: 'top bottom',
+                toggleClass: { targets: element, className: 'appear' }
+            });
+        });
+    </script>
+
+</body>
+</html>                    
